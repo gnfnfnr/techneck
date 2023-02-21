@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "제품 소개",
+    "image": "http://dummyimage.com/102x100.png/5fa2dd/ffffff",
+    "description": "Other specified injuries of thorax"
+  },
+  {
+    "id": 2,
+    "title": "why? 왜 이 제품인지",
+    "image": "http://dummyimage.com/118x100.png/dddddd/000000",
+    "description": "Nondisp fx of anterior column of left acetabulum, init"
+  },
+  {
+    "id": 3,
+    "title": "기대효과",
+    "image": "http://dummyimage.com/250x100.png/ff4444/ffffff",
+    "description": "Breakdown of unsp cardiac electronic device, sequela"
+  },
+  {
+    "id": 4,
+    "title": "제품설계",
+    "image": "http://dummyimage.com/154x100.png/cc0000/ffffff",
+    "description": "Wedge compression fracture of unspecified lumbar vertebra"
+  }
+]
