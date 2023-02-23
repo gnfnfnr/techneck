@@ -3,14 +3,20 @@ import styled from "styled-components";
 import data from "../resource/data.json";
 
 const HomeBox = styled.div`
-  // max-width: 1080px;
+  margin-top: 50px;
+  min-height: 100vh;
+  width: 100%;
 `;
 const HomeMain = styled.div`
   height: auto;
 `;
 const HomeArticles = styled.div`
   display: grid;
-  grid-auto-rows: minmax(400px, auto);
+  grid-auto-rows: 400px;
+  background: #eaeaea;
+  position: relative;
+  height: 1800px;
+  width: 100%;
 `;
 
 const MainImage = styled.img`
@@ -19,92 +25,76 @@ const MainImage = styled.img`
 `;
 
 const ArticleBox = styled.div<{ index: number }>`
+  position: sticky;
   background-color: #eaeaea;
-  border: 1px solid;
-  transition: -webkit-transform 1s ease;
-  transition: transform 1s ease;
-  transition: transform 1s ease, -webkit-transfor;
-  position: relative;
+  transition: -webkit-top 1s ease;
+  transition: top 2s ease;
+  transition: top 1s ease, -webkit-transfor;
   z-index: ${({ index }) => index};
+  top: 50px;
+  background: orange;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ArticleTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: bold;
 `;
 
 const Test = styled.div`
-  height: 1200px;
+  // transition: top 0.2s ease, -webkit-transfor;
+  height: 800px;
   background-color: red;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+  & div {
+    height: 900px;
+    background-color: blue;
+  }
 `;
+
+interface Movement {
+  [key: number]: number;
+}
 
 const Home = () => {
   const articleBoxRef = useRef<HTMLDivElement>(null);
   const articleRef = useRef<null[] | HTMLDivElement[]>([]);
-  const [currentArticle, setCurrentArticle] = useState<number>(-1);
+  const [currentArticle, setCurrentArticle] = useState<number>(0);
   const [move, setMove] = useState<number>(0);
+  const testRef = useRef<HTMLDivElement>(null);
+
   const handleScroll = () => {
-    const articleBox = articleBoxRef.current?.offsetTop || 0 / 4;
-    const articleBoxHeight = articleBoxRef.current?.clientHeight || 0;
+    const articleBox = (articleBoxRef.current?.offsetTop || 0) + 1150;
     if (articleBox - window.scrollY < 0) {
-      console.log(Math.abs(articleBox - window.scrollY));
-      setCurrentArticle(
-        Math.abs(articleBox - window.scrollY) / (articleBoxHeight / 4)
-      );
-    } else {
-      setCurrentArticle(-1);
+      setCurrentArticle(articleBox - window.scrollY);
     }
   };
 
   useEffect(() => {
-    if (articleBoxRef.current) {
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   function changeStyle(el: HTMLElement | null, value: string) {
     if (el !== null) {
-      el.style.transform = value;
+      el.style.top = value;
     }
   }
 
   useEffect(() => {
-    setMove(0);
-  }, [Math.floor(currentArticle)]);
-
-  useEffect(() => {
-    setMove(move + Math.abs(currentArticle) * 30 - Math.floor(currentArticle));
-    console.log(move);
-    if (currentArticle !== -1) {
-      if (
-        articleRef.current[
-          Math.floor(currentArticle > 0 ? currentArticle + 1 : 1)
-        ]?.style !== null
-      ) {
-        changeStyle(
-          articleRef.current[Math.floor(currentArticle)],
-          `translateY(${move}px)`
-        );
-        // changeStyle(
-        //   articleRef.current[
-        //     Math.floor(currentArticle - 1 > 0 ? currentArticle - 1 : 0)
-        //   ],
-        //   `translateY(${move}px)`
-        // );
-      }
-    } else {
-      if (articleRef.current[0]?.style !== null) {
-        // changeStyle(
-        //   articleRef.current[
-        //     Math.floor(currentArticle > 0 ? currentArticle - 1 : 0)
-        //   ],
-        //   `translateY(0px)`
-        // );
-      }
-    }
+    setMove(currentArticle * 0.4);
+    changeStyle(testRef.current, `${move}px`);
   }, [currentArticle]);
   return (
     <HomeBox>
       <HomeMain>
-        이미지 사진
         <MainImage
-          src="http://dummyimage.com/1080x600.png/3C4048/ffffff"
+          src="http://dummyimage.com/1080x600.png/3d3d3d/000000"
           alt="로고 이미지"
         />
       </HomeMain>
@@ -115,13 +105,14 @@ const Home = () => {
             ref={(elem) => (articleRef.current[index] = elem)}
             index={index}
           >
-            <h2>{title}</h2>
+            <ArticleTitle>{title}</ArticleTitle>
             <img src={image} alt="기사 이미지" />
             <p>{description}</p>
           </ArticleBox>
         ))}
+        <div>로고</div>
       </HomeArticles>
-      <Test>
+      <Test ref={testRef}>
         <div>dds</div>
       </Test>
     </HomeBox>
