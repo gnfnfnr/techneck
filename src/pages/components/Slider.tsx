@@ -4,19 +4,19 @@ import styled from "styled-components";
 const SliderBox = styled.div`
   position: relative;
   max-width: 1080px;
-  overflow-x: hidden;
-  height: 600px;
+  height: 40vh;
   margin: 0 auto;
 `;
 
 const SliderImage = styled.img<{ index: number; current: number }>`
   width: 100%;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
-  visibility: ${({ index, current }) =>
-    index === current ? "visible" : "hidden"};
+  opacity: ${({ index, current }) => (index === current ? 1 : 0)};
+  transition: opacity 1.5s ease-in-out;
 `;
 
 const SliderButtonsBox = styled.div`
