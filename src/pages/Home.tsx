@@ -4,28 +4,24 @@ import data from "../resource/data.json";
 import Slider from "./components/Slider";
 
 const HomeBox = styled.div`
-  margin-top: 50px;
+  margin-top: 60px;
   min-height: 100vh;
   width: 100%;
-`;
-const HomeMain = styled.div`
-  height: auto;
   position: relative;
 `;
 
 const HomeArticles = styled.div`
   display: grid;
-  grid-auto-rows: 400px;
+  grid-template-rows: repeat(4, 400px);
   background: #eaeaea;
   position: relative;
-  height: 1900px;
   width: 100%;
 `;
 
 const ArticleBox = styled.div<{ index: number }>`
   position: sticky;
   background-color: #eaeaea;
-  top: 50px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,37 +34,43 @@ const ArticleTitle = styled.h2`
 `;
 
 const HomeAdvertisement = styled.div`
-  transition: -webkit-top 0.5s ease;
-  transition: top 0.5s ease;
-  transition: top 0.5s ease, -webkit-transfor;
-  height: 800px;
+  transition: bottom 0.2s ease;
+  height: 50vh;
   background-color: red;
   width: 100%;
   z-index: 10;
-  position: relative;
+  position: absolute;
+  bottom: -400px;
   & div {
-    height: 900px;
     background-color: blue;
   }
 `;
 
+const DescriptionBox = styled.p`
+  font-size: 3rem;
+  font-weight: bold;
+  word-spacing: 4px;
+  line-height: 3rem;
+  word-break: break-all;
+  overflow: hidden;
+  padding: 20px;
+`;
+
 function changeStyle(el: HTMLElement | null, value: string) {
   if (el !== null) {
-    el.style.top = value;
+    el.style.bottom = value;
   }
 }
 const Home = () => {
   const articleBoxRef = useRef<HTMLDivElement>(null);
   const articleRef = useRef<null[] | HTMLDivElement[]>([]);
   const [currentArticle, setCurrentArticle] = useState<number>(0);
-  const [move, setMove] = useState<number>(0);
+  const [move, setMove] = useState<number>(-800);
   const advertisementRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
     const articleBox = (articleBoxRef.current?.offsetTop || 0) + 1150;
-    if (articleBox - window.scrollY < 0) {
-      setCurrentArticle(articleBox - window.scrollY);
-    }
+    setCurrentArticle(articleBox - window.scrollY);
   };
 
   useEffect(() => {
@@ -77,21 +79,21 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    setMove(currentArticle * 0.4);
+    console.log("df");
+    console.log(currentArticle);
+    setMove(-400 - currentArticle * 0.3);
     changeStyle(advertisementRef.current, `${move}px`);
   }, [currentArticle]);
   return (
     <HomeBox>
-      <HomeMain>
-        <Slider
-          imageUrl={[
-            "http://dummyimage.com/1080x600.png/3d3d3d/000000",
-            "http://dummyimage.com/1080x600.png/4A4543/000000",
-            "http://dummyimage.com/1080x600.png/D6D6D6/000000",
-            "http://dummyimage.com/1080x600.png/573D3D/000000",
-          ]}
-        />
-      </HomeMain>
+      <Slider
+        imageUrl={[
+          "http://dummyimage.com/1080x600.png/3d3d3d/000000",
+          "http://dummyimage.com/1080x600.png/4A4543/000000",
+          "http://dummyimage.com/1080x600.png/D6D6D6/000000",
+          "http://dummyimage.com/1080x600.png/573D3D/000000",
+        ]}
+      />
       <HomeArticles ref={articleBoxRef}>
         {data.map(({ id, title, image, description }, index) => (
           <ArticleBox
@@ -104,10 +106,13 @@ const Home = () => {
             <p>{description}</p>
           </ArticleBox>
         ))}
-        <div>로고</div>
+        <DescriptionBox>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam
+          iste libero earum inventore corrupti, non culpa expedita? Dolores
+        </DescriptionBox>
       </HomeArticles>
       <HomeAdvertisement ref={advertisementRef}>
-        <div>앱 다운로드 하러가기</div>
+        <div>거북 목인 지 확인하러 가기</div>
       </HomeAdvertisement>
     </HomeBox>
   );
