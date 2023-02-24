@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import data from "../resource/data.json";
+import Slider from "./components/Slider";
 
 const HomeBox = styled.div`
   margin-top: 50px;
@@ -9,30 +10,22 @@ const HomeBox = styled.div`
 `;
 const HomeMain = styled.div`
   height: auto;
+  position: relative;
 `;
+
 const HomeArticles = styled.div`
   display: grid;
   grid-auto-rows: 400px;
   background: #eaeaea;
   position: relative;
-  height: 1800px;
+  height: 1900px;
   width: 100%;
-`;
-
-const MainImage = styled.img`
-  width: 100%;
-  object-fit: contain;
 `;
 
 const ArticleBox = styled.div<{ index: number }>`
   position: sticky;
   background-color: #eaeaea;
-  transition: -webkit-top 1s ease;
-  transition: top 2s ease;
-  transition: top 1s ease, -webkit-transfor;
-  z-index: ${({ index }) => index};
   top: 50px;
-  background: orange;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,8 +37,10 @@ const ArticleTitle = styled.h2`
   font-weight: bold;
 `;
 
-const Test = styled.div`
-  // transition: top 0.2s ease, -webkit-transfor;
+const HomeAdvertisement = styled.div`
+  transition: -webkit-top 0.5s ease;
+  transition: top 0.5s ease;
+  transition: top 0.5s ease, -webkit-transfor;
   height: 800px;
   background-color: red;
   width: 100%;
@@ -57,16 +52,17 @@ const Test = styled.div`
   }
 `;
 
-interface Movement {
-  [key: number]: number;
+function changeStyle(el: HTMLElement | null, value: string) {
+  if (el !== null) {
+    el.style.top = value;
+  }
 }
-
 const Home = () => {
   const articleBoxRef = useRef<HTMLDivElement>(null);
   const articleRef = useRef<null[] | HTMLDivElement[]>([]);
   const [currentArticle, setCurrentArticle] = useState<number>(0);
   const [move, setMove] = useState<number>(0);
-  const testRef = useRef<HTMLDivElement>(null);
+  const advertisementRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
     const articleBox = (articleBoxRef.current?.offsetTop || 0) + 1150;
@@ -80,22 +76,20 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function changeStyle(el: HTMLElement | null, value: string) {
-    if (el !== null) {
-      el.style.top = value;
-    }
-  }
-
   useEffect(() => {
     setMove(currentArticle * 0.4);
-    changeStyle(testRef.current, `${move}px`);
+    changeStyle(advertisementRef.current, `${move}px`);
   }, [currentArticle]);
   return (
     <HomeBox>
       <HomeMain>
-        <MainImage
-          src="http://dummyimage.com/1080x600.png/3d3d3d/000000"
-          alt="로고 이미지"
+        <Slider
+          imageUrl={[
+            "http://dummyimage.com/1080x600.png/3d3d3d/000000",
+            "http://dummyimage.com/1080x600.png/4A4543/000000",
+            "http://dummyimage.com/1080x600.png/D6D6D6/000000",
+            "http://dummyimage.com/1080x600.png/573D3D/000000",
+          ]}
         />
       </HomeMain>
       <HomeArticles ref={articleBoxRef}>
@@ -112,12 +106,11 @@ const Home = () => {
         ))}
         <div>로고</div>
       </HomeArticles>
-      <Test ref={testRef}>
-        <div>dds</div>
-      </Test>
+      <HomeAdvertisement ref={advertisementRef}>
+        <div>앱 다운로드 하러가기</div>
+      </HomeAdvertisement>
     </HomeBox>
   );
 };
 
 export default Home;
-// https://velog.io/@mamonde456/React-horizontal-scrolling-%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
