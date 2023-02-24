@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const SliderBox = styled.div`
@@ -9,16 +9,17 @@ const SliderBox = styled.div`
   margin: 0 auto;
 `;
 
-const SliderImage = styled.img<{ show: boolean }>`
+const SliderImage = styled.img<{ index: number; current: number }>`
   width: 100%;
   object-fit: contain;
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
+  visibility: ${({ index, current }) =>
+    index === current ? "visible" : "hidden"};
 `;
 
-const SliderButton = styled.div`
+const SliderButtonsBox = styled.div`
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -26,33 +27,70 @@ const SliderButton = styled.div`
   display: flex;
   width: 100px;
   justify-content: space-between;
+`;
 
-  & button {
-    all: unset;
-    background-color: #fff;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-  }
+const SliderButton = styled.button<{ index: number; current: number }>`
+  all: unset;
+  background-color: #${({ index, current }) => (index === current ? "fff" : "ffffff40")};
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
 `;
 
 interface Image {
   imageUrl: string[];
 }
 
+interface IUseInterval {
+  (callback: () => void, interval: number): void;
+}
+
+const useInterval: IUseInterval = (callback, interval) => {
+  const savedCallback = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
+    }
+
+    let id = setInterval(tick, interval);
+    return () => clearInterval(id);
+  }, [interval]);
+};
+
 const Slider = ({ imageUrl }: Image) => {
+  const [current, setCurrent] = useState<number>(0);
   const button = Array.from({ length: imageUrl.length }, (_, index) => index);
-  console.log(button);
+  useInterval(() => {
+    setCurrent(current >= 3 ? 0 : current + 1);
+  }, 5000);
   return (
     <SliderBox>
-      {imageUrl.map((url) => (
-        <SliderImage src={url} alt="로고 이미지" show={false} />
+      {imageUrl.map((url, index) => (
+        <SliderImage
+          src={url}
+          alt="로고 이미지"
+          index={index}
+          current={current}
+          key={url}
+        />
       ))}
-      <SliderButton>
+      <SliderButtonsBox>
         {button.map((index) => (
-          <button key={index} />
+          <SliderButton
+            key={index}
+            onClick={() => setCurrent(index)}
+            index={index}
+            current={current}
+          />
         ))}
-      </SliderButton>
+      </SliderButtonsBox>
     </SliderBox>
   );
 };
