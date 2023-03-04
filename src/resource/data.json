@@ -7,7 +7,7 @@
   },
   {
     "id": 2,
-    "title": "why? 왜 이 제품인지",
+    "title": "제품설계",
     "image": "http://dummyimage.com/118x100.png/dddddd/000000",
     "description": "Nondisp fx of anterior column of left acetabulum, init"
   },
@@ -19,7 +19,7 @@
   },
   {
     "id": 4,
-    "title": "제품설계",
+    "title": "why? 왜 이 제품인지",
     "image": "http://dummyimage.com/154x100.png/cc0000/ffffff",
     "description": "Wedge compression fracture of unspecified lumbar vertebra"
   }

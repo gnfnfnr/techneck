@@ -10,7 +10,7 @@ const HeaderBox = styled.header`
   z-index: 999;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 8px 20px;
   width: 100%;
   box-sizing: border-box;
   align-items: center;
@@ -38,7 +38,7 @@ const Header = () => {
     <HeaderBox>
       <img
         onClick={() => navigate("/")}
-        src="http://dummyimage.com/44x50.png/cc0000/ffffff"
+        src="http://dummyimage.com/60x40.png/cc0000/ffffff"
         alt="로고 이미지"
       />
       <HeaderNav>

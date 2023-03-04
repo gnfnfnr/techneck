@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import data from "../resource/data.json";
 import Slider from "./components/Slider";
 
 const HomeBox = styled.div`
-  margin-top: 60px;
+  margin-top: var(--height-header);
   min-height: 100vh;
   width: 100%;
   position: relative;
@@ -12,20 +13,25 @@ const HomeBox = styled.div`
 
 const HomeArticles = styled.div`
   display: grid;
-  grid-template-rows: repeat(4, 400px);
-  background: #eaeaea;
+  grid-template-rows: repeat(5, 420px);
+  background: var(--main-color);
   position: relative;
   width: 100%;
 `;
 
 const ArticleBox = styled.div<{ index: number }>`
+  max-width: var(--width-max);
   position: sticky;
-  background-color: #eaeaea;
+  background-color: var(--main-color);
   top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  align-items: flex-${({ index }) => (index % 2 ? "end" : "start")};
+  padding: 20px 25px;
+  box-sizing: border-box;
+  justify-content: space-evenly;
 `;
 
 const ArticleTitle = styled.h2`
@@ -33,17 +39,14 @@ const ArticleTitle = styled.h2`
   font-weight: bold;
 `;
 
-const HomeAdvertisement = styled.div`
+const HomeAdvertisement = styled.section`
   transition: bottom 0.2s ease;
   height: 50vh;
-  background-color: red;
+  background-color: var(--main-color-op);
   width: 100%;
   z-index: 10;
   position: absolute;
   bottom: -400px;
-  & div {
-    background-color: blue;
-  }
 `;
 
 const DescriptionBox = styled.p`
@@ -56,12 +59,19 @@ const DescriptionBox = styled.p`
   padding: 20px;
 `;
 
+const AdvertisementBox = styled.div`
+  height: 100%;
+  padding: 25px 20px;
+  box-sizing: border-box;
+`;
+
 function changeStyle(el: HTMLElement | null, value: string) {
   if (el !== null) {
     el.style.bottom = value;
   }
 }
 const Home = () => {
+  const navigate = useNavigate();
   const articleBoxRef = useRef<HTMLDivElement>(null);
   const articleRef = useRef<null[] | HTMLDivElement[]>([]);
   const [currentArticle, setCurrentArticle] = useState<number>(0);
@@ -79,8 +89,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("df");
-    console.log(currentArticle);
     setMove(-400 - currentArticle * 0.3);
     changeStyle(advertisementRef.current, `${move}px`);
   }, [currentArticle]);
@@ -112,7 +120,10 @@ const Home = () => {
         </DescriptionBox>
       </HomeArticles>
       <HomeAdvertisement ref={advertisementRef}>
-        <div>거북 목인 지 확인하러 가기</div>
+        <AdvertisementBox>
+          <p>거북 목인 지 확인하러 가기</p>
+          <button onClick={() => navigate("/webcam")}>test</button>
+        </AdvertisementBox>
       </HomeAdvertisement>
     </HomeBox>
   );

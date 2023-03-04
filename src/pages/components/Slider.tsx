@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const SliderBox = styled.div`
   position: relative;
-  max-width: 1080px;
+  max-width: var(--width-max);
   height: 40vh;
   margin: 0 auto;
 `;
