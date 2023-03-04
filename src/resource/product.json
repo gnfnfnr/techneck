@@ -1,0 +1,23 @@
+[
+  {
+    "id": "front",
+    "name": "제품 앞면",
+    "image": "front.png",
+    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic device, sequela",
+    "description": "Other specified injuries of thorax"
+  },
+  {
+    "id": "connection",
+    "name": "블루투스 모듈",
+    "image": "connection.png",
+    "short": "Breakdown of unsp cardiac sequelaBreakdown of unsp cardiac electronic device, sequela",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam iste libero earum inventore corrupti, non culpa expedita? Dolores"
+  },
+  {
+    "id": "back",
+    "name": "제품 뒷면",
+    "image": "back.png",
+    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic device, sequela",
+    "description": "Breakdown of unsp cardiac electronic device, sequela"
+  }
+]

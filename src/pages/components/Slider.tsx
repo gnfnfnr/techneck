@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import UseInterval from "./UseInterval";
 
 const SliderBox = styled.div`
   position: relative;
@@ -41,33 +42,10 @@ interface Image {
   imageUrl: string[];
 }
 
-interface IUseInterval {
-  (callback: () => void, interval: number): void;
-}
-
-const useInterval: IUseInterval = (callback, interval) => {
-  const savedCallback = useRef<(() => void) | null>(null);
-
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
-
-  useEffect(() => {
-    function tick() {
-      if (savedCallback.current) {
-        savedCallback.current();
-      }
-    }
-
-    let id = setInterval(tick, interval);
-    return () => clearInterval(id);
-  }, [interval]);
-};
-
 const Slider = ({ imageUrl }: Image) => {
   const [current, setCurrent] = useState<number>(0);
   const button = Array.from({ length: imageUrl.length }, (_, index) => index);
-  useInterval(() => {
+  UseInterval(() => {
     setCurrent(current >= 3 ? 0 : current + 1);
   }, 5000);
   return (

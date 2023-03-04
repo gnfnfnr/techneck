@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Intro from "./pages/Intro";
 import Header from "./pages/nav/Header";
-import Product from "./pages/Product";
+import Product from "./pages/product/Product";
 import WebCam from "./pages/machine/WebCam";
 import { GlobalStyle } from "./style/global";
+import Describe from "./pages/product/Describe";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/intro" element={<Intro />} />
-        <Route path="/product" element={<Product />} />
+        <Route path="/describe" element={<Describe />} />
         <Route path="/webcam" element={<WebCam />} />
       </Routes>
     </BrowserRouter>

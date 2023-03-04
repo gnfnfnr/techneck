@@ -29,7 +29,7 @@ const HeaderNav = styled.div`
 
 const list = [
   { id: "intro", title: "소개", href: "/intro" },
-  { id: "product", title: "제품", href: "/product" },
+  { id: "product", title: "제품", href: "/describe" },
 ];
 
 const Header = () => {

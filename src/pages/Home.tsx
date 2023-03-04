@@ -4,7 +4,7 @@ import styled from "styled-components";
 import data from "../resource/data.json";
 import Slider from "./components/Slider";
 
-const HomeBox = styled.div`
+const HomeBox = styled.main`
   margin-top: var(--height-header);
   min-height: 100vh;
   width: 100%;
