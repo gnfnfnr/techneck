@@ -3,7 +3,7 @@
     "id": "front",
     "name": "제품 앞면",
     "image": "front.png",
-    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic device, sequela",
+    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic ",
     "description": "Other specified injuries of thorax"
   },
   {
@@ -17,7 +17,7 @@
     "id": "back",
     "name": "제품 뒷면",
     "image": "back.png",
-    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic device, sequela",
+    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp ",
     "description": "Breakdown of unsp cardiac electronic device, sequela"
   }
 ]

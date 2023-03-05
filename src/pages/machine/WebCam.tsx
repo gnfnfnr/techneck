@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Pose from "./Pose";
+
 import styled from "styled-components";
+import Pose from "./Pose";
 
 const WebCamBox = styled.div`
   margin-top: var(--height-header);

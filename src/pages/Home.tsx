@@ -114,10 +114,7 @@ const Home = () => {
             <p>{description}</p>
           </ArticleBox>
         ))}
-        <DescriptionBox>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam
-          iste libero earum inventore corrupti, non culpa expedita? Dolores
-        </DescriptionBox>
+        <DescriptionBox />
       </HomeArticles>
       <HomeAdvertisement ref={advertisementRef}>
         <AdvertisementBox>
