@@ -7,6 +7,7 @@ import Product from "./pages/product/Product";
 import WebCam from "./pages/machine/WebCam";
 import { GlobalStyle } from "./style/global";
 import Describe from "./pages/product/Describe";
+import Pose from "./pages/machine/Pose";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/intro" element={<Intro />} />
         <Route path="/describe" element={<Describe />} />
         <Route path="/webcam" element={<WebCam />} />
+        <Route path="/webcam/pose" element={<Pose />} />
       </Routes>
     </BrowserRouter>
   );

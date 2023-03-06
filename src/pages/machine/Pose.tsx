@@ -13,6 +13,9 @@ const Pose = () => {
     ctx: CanvasRenderingContext2D,
     maxPredictions: number;
 
+  useEffect(() => {
+    init();
+  }, []);
   async function init(): Promise<void> {
     const modelURL: string = URL + "model.json";
     const metadataURL: string = URL + "metadata.json";
@@ -29,7 +32,6 @@ const Pose = () => {
     webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
-    console.log(webcam);
     window.requestAnimationFrame(loop);
 
     // append/get elements to the DOM
@@ -41,7 +43,7 @@ const Pose = () => {
     }
   }
 
-  async function loop(timestamp: number): Promise<void> {
+  async function loop(): Promise<void> {
     webcam.update(); // update the webcam frame
     await predict();
     window.requestAnimationFrame(loop);
@@ -83,19 +85,9 @@ const Pose = () => {
     }
   }
 
-  async function stopPose() {
-    if (webcam) {
-      await webcam.stop();
-    } else {
-      console.log(webcam);
-      console.log("dfdf");
-    }
-  }
-
   return (
     <>
       <div>
-        <div onClick={init}>시작하기</div>
         <canvas ref={canvasRef} />
       </div>
       <div>
@@ -107,7 +99,6 @@ const Pose = () => {
           )
         )}
       </div>
-      <div onClick={stopPose}>끝내기</div>
     </>
   );
 };

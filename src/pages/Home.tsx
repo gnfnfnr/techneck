@@ -32,6 +32,9 @@ const ArticleBox = styled.div<{ index: number }>`
   padding: 20px 25px;
   box-sizing: border-box;
   justify-content: space-evenly;
+  @media screen and (max-width: 300px) {
+    align-items: center;
+  }
 `;
 
 const ArticleTitle = styled.h2`
