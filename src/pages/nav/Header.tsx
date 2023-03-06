@@ -6,7 +6,7 @@ const HeaderBox = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #eaeaea;
+  background-color: #9d959c;
   z-index: 999;
   display: flex;
   justify-content: space-between;
@@ -27,20 +27,26 @@ const HeaderNav = styled.div`
   }
 `;
 
+const HeaderLogo = styled.img`
+  height: 40px;
+  object-fit: contain;
+`;
+
 const list = [
-  { id: "intro", title: "소개", href: "/intro" },
   { id: "product", title: "제품", href: "/describe" },
+  { id: "webcam", title: "측정", href: "/webcam" },
 ];
 
 const Header = () => {
   const navigate = useNavigate();
   return (
     <HeaderBox>
-      <img
+      <HeaderLogo
         onClick={() => navigate("/")}
-        src="http://dummyimage.com/60x40.png/cc0000/ffffff"
+        src={require("../../img/logo.png")}
         alt="로고 이미지"
       />
+
       <HeaderNav>
         <ul>
           {list.map(({ id, title, href }) => (
