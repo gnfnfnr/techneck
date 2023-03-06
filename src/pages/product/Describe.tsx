@@ -33,6 +33,7 @@ const DescribeImage = styled.img<{ index: number; current: number }>`
   object-fit: contain;
   opacity: ${({ index, current }) => (index === current ? "100" : "60")}%;
   mix-blend-mode: multiply;
+  transition: opacity 1.5s ease-in-out;
 
   &:first-child {
     width: 100%;
@@ -76,7 +77,7 @@ const DescribeImageBox = styled.div`
   max-width: 500px;
 `;
 
-const TextCover = styled.div`
+const TextContent = styled.div`
   border-left: 3px solid darkcyan;
   padding: 10px 14px;
 `;
@@ -90,13 +91,18 @@ const TextDetail = styled.div`
   cursor: pointer;
 `;
 
+const TextBox = styled.div<{ current: number }>`
+  transition: opacity 1s ease-in-out;
+  margin-bottom: 25px;
+`;
+
 export default function Describe() {
   const [current, setCurrent] = useState<number>(0);
   UseInterval(() => {
     setCurrent(current >= 2 ? 0 : current + 1);
   }, 5000);
   const [show, setShow] = useState<boolean>(false);
-
+  const [showNumber, setShowNumber] = useState<number>(0);
   return (
     <DescribeBox>
       <DescribeTitleBox>
@@ -119,14 +125,23 @@ export default function Describe() {
           ))}
         </DescribeImageBox>
         <DescribeTextBox>
-          <TextCover>
-            <h3>{data[current].name}</h3>
-            <p>{data[current].short}</p>
-          </TextCover>
-          <TextDetail onClick={() => setShow(true)}>자세히</TextDetail>
+          <TextBox current={current}>
+            <TextContent>
+              <h3>{data[current].name}</h3>
+              <p>{data[current].short}</p>
+            </TextContent>
+            <TextDetail
+              onClick={() => {
+                setShow(true);
+                setShowNumber(current);
+              }}
+            >
+              자세히
+            </TextDetail>
+          </TextBox>
         </DescribeTextBox>
       </DescribeMain>
-      {show && <Detail setShow={setShow} />}
+      {show && <Detail setShow={setShow} current={showNumber} />}
     </DescribeBox>
   );
 }

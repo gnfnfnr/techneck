@@ -1,17 +1,18 @@
-import React, { useRef } from "react";
-import * as tmPose from "@teachablemachine/pose";
+import React, { useEffect, useRef, useState } from "react";
 
-type Props = {};
+const Pose = () => {
+  const [prediction, setPrediction] = useState<number>(0);
+  const containerRef = useRef<null[] | HTMLDivElement[]>([]);
 
-const Pose = (props: Props) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const tmPose: any = window.tmPose;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const URL: string =
     "https://teachablemachine.withgoogle.com/models/R1Rlcg33R/";
   let model: any,
-    webcam: tmPose.Webcam,
+    webcam: any,
     ctx: CanvasRenderingContext2D,
     maxPredictions: number;
+
   async function init(): Promise<void> {
     const modelURL: string = URL + "model.json";
     const metadataURL: string = URL + "metadata.json";
@@ -28,6 +29,7 @@ const Pose = (props: Props) => {
     webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
+    console.log(webcam);
     window.requestAnimationFrame(loop);
 
     // append/get elements to the DOM
@@ -35,12 +37,7 @@ const Pose = (props: Props) => {
       canvasRef.current.width = size;
       canvasRef.current.height = size;
       ctx = canvasRef.current.getContext("2d") as CanvasRenderingContext2D;
-      for (let i: number = 0; i < maxPredictions; i++) {
-        // and class labels
-
-        containerRef.current &&
-          containerRef.current.appendChild(document.createElement("div"));
-      }
+      setPrediction(maxPredictions);
     }
   }
 
@@ -50,32 +47,32 @@ const Pose = (props: Props) => {
     window.requestAnimationFrame(loop);
   }
 
+  // Prediction 2: run input through teachable machine classification model
   async function predict(): Promise<void> {
     // Prediction #1: run input through posenet
     // estimatePose can take in an image, video or canvas html element
-    console.log(model);
-    const { pose, posenetOutput } = await model.estimatePose(
-      webcam.canvas,
-      false
-    );
+    const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+    // Prediction 2: run input through teachable machine classification model
+    const prediction = await model.predict(posenetOutput);
 
-    // // Prediction 2: run input through teachable machine classification model
-    // const prediction = await model.predict(posenetOutput);
-    // for (let i: number = 0; i < maxPredictions; i++) {
-    //   const classPrediction: string =
-    //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-    //   if (containerRef.current) {
-    //     containerRef.current.innerHTML = classPrediction;
-    //   }
-    // }
+    for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      elementControl(containerRef.current[i], classPrediction);
+    }
+
     // finally draw the poses
-    // drawPose(pose);
+    drawPose(pose);
+  }
+
+  function elementControl(ele: HTMLElement | null, value: string) {
+    if (ele) {
+      ele.innerHTML = value;
+    }
   }
 
   function drawPose(pose: any | undefined): void {
-    console.log(webcam);
     if (webcam.canvas) {
-      console.log(webcam.canvas);
       ctx.drawImage(webcam.canvas, 0, 0);
       // draw the keypoints and skeleton
       if (pose) {
@@ -83,18 +80,34 @@ const Pose = (props: Props) => {
         tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
         tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
       }
+    }
+  }
+
+  async function stopPose() {
+    if (webcam) {
+      await webcam.stop();
     } else {
-      console.log("dff");
+      console.log(webcam);
+      console.log("dfdf");
     }
   }
 
   return (
     <>
-      <div onClick={init}>시작하기</div>;
       <div>
-        <canvas ref={canvasRef} width="200px" height="300px"></canvas>
+        <div onClick={init}>시작하기</div>
+        <canvas ref={canvasRef} />
       </div>
-      <div ref={containerRef}></div>
+      <div>
+        {Array.from({ length: prediction }, (_, index: number) => index).map(
+          (index) => (
+            <div
+              ref={(ele: HTMLDivElement) => (containerRef.current[index] = ele)}
+            />
+          )
+        )}
+      </div>
+      <div onClick={stopPose}>끝내기</div>
     </>
   );
 };

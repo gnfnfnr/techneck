@@ -1,8 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
+import data from "../../resource/product.json";
 
 interface Info {
   setShow: Dispatch<SetStateAction<boolean>>;
+  current: number;
 }
 
 const DetailBox = styled.div`
@@ -49,21 +51,23 @@ const DetailMain = styled.div`
   align-items: center;
   flex-wrap: wrap;
   padding: 0 10px;
+  justify-content: space-between;
 `;
 const DetailDescription = styled.p`
-  width: 60%;
+  width: 50%;
+  text-align: center;
 `;
 const DetailImg = styled.img`
   width: 40%;
   min-width: 200px;
 `;
 
-export default function Detail({ setShow }: Info) {
+export default function Detail({ setShow, current }: Info) {
   return (
     <DetailBox>
       <DetailSection>
         <DetailTitle>
-          <h2>블루투스</h2>
+          <h2>{data[current].name}</h2>
           <DetailClose
             src={require("../../img/close.png")}
             onClick={() => {
@@ -72,7 +76,7 @@ export default function Detail({ setShow }: Info) {
           />
         </DetailTitle>
         <DetailMain>
-          <DetailDescription>dfdfdfd</DetailDescription>
+          <DetailDescription>{data[current].description}</DetailDescription>
           <DetailImg src={require("../../img/back.png")} />
         </DetailMain>
       </DetailSection>
