@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 
 const Pose = () => {
   const [prediction, setPrediction] = useState<number>(0);
+  const [windowSize, setWindowSize] = useState<number[]>([0, 0]);
   const containerRef = useRef<null[] | HTMLDivElement[]>([]);
-
   const tmPose: any = window.tmPose;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const URL: string =
@@ -15,6 +15,7 @@ const Pose = () => {
 
   useEffect(() => {
     init();
+    window.resizeTo(window.innerWidth / 2, (window.innerHeight / 3) * 2);
   }, []);
   async function init(): Promise<void> {
     const modelURL: string = URL + "model.json";
@@ -27,17 +28,18 @@ const Pose = () => {
     maxPredictions = model.getTotalClasses();
 
     // Convenience function to setup a webcam
-    const size: number = 200;
+    const widthSize: number = window.innerWidth;
+    const heightSize: number = (window.innerHeight / 3) * 2;
     const flip: boolean = true; // whether to flip the webcam
-    webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
+    webcam = new tmPose.Webcam(widthSize, heightSize, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
     window.requestAnimationFrame(loop);
 
     // append/get elements to the DOM
     if (canvasRef.current) {
-      canvasRef.current.width = size;
-      canvasRef.current.height = size;
+      canvasRef.current.width = widthSize;
+      canvasRef.current.height = heightSize;
       ctx = canvasRef.current.getContext("2d") as CanvasRenderingContext2D;
       setPrediction(maxPredictions);
     }

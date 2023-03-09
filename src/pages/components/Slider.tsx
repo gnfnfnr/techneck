@@ -7,6 +7,7 @@ const SliderBox = styled.div`
   max-width: var(--width-max);
   height: 40vh;
   margin: 0 auto;
+  min-height: 350px;
 `;
 
 const SliderImage = styled.img<{ index: number; current: number }>`

@@ -25,6 +25,11 @@ const HeaderNav = styled.div`
   & > ul > li {
     cursor: pointer;
   }
+
+  & > ul > li:not(:last-of-type) {
+    border-right: 1px solid #c8c8c8;
+    padding-right: 7px;
+  }
 `;
 
 const HeaderLogo = styled.img`

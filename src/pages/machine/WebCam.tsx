@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Pose from "./Pose";
 
 const WebCamBox = styled.main`
   margin-top: var(--height-header);
@@ -71,13 +70,18 @@ export default function WebCam() {
             type="checkbox"
             checked={show}
             onChange={() => setShow(!show)}
+            id="warning"
           />
-          <label>주의 사항을 읽었습니다.</label>
+          <label htmlFor="warning">주의 사항을 읽었습니다.</label>
         </WebCamCheck>
         {show ? (
           <WebCamBtn
             onClick={() =>
-              window.open("/webcam/pose", "width: 400px;", "height: 200px;")
+              window.open(
+                "/webcam/pose",
+                "_blank",
+                "width: 300px, height: 200px"
+              )
             }
           >
             시작하기

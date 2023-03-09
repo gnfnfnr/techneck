@@ -7,7 +7,7 @@ import Detail from "./Detail";
 const DescribeBox = styled.main`
   min-height: 90vh;
   margin: var(--height-header) auto 0;
-  justify-content: space-around;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +16,7 @@ const DescribeBox = styled.main`
 
 const DescribeTitleBox = styled.div`
   text-align: center;
+  margin-bottom: 30px;
   & h2 {
     font-size: 24px;
     font-weight: bold;
@@ -25,6 +26,15 @@ const DescribeTitleBox = styled.div`
     line-height: 1.4;
     width: 60%;
     margin: 0 auto;
+    color: #363636;
+  }
+
+  @media screen and (max-width: 400px) {
+    & p {
+      line-height: 1.4;
+      width: 100%;
+      margin: 0 auto;
+    }
   }
 `;
 
@@ -61,7 +71,6 @@ const DescribeMain = styled.div`
 `;
 const DescribeTextBox = styled.div`
   width: 30%;
-  min-width: 300px;
   & h3 {
     font-size: 18px;
     font-weight: bold;
@@ -70,11 +79,15 @@ const DescribeTextBox = styled.div`
   & p {
     line-height: 1.5;
   }
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
 `;
 const DescribeImageBox = styled.div`
   position: relative;
   width: 60%;
-  max-width: 500px;
+  max-width: 400px;
 `;
 
 const TextContent = styled.div`
