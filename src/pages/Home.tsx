@@ -44,7 +44,7 @@ const ArticleTitle = styled.h2`
 
 const HomeAdvertisement = styled.section`
   transition: bottom 0.2s ease;
-  height: 50vh;
+  height: 400px;
   background-color: var(--main-color-op);
   width: 100%;
   z-index: 10;

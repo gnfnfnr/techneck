@@ -8,6 +8,7 @@ import WebCam from "./pages/machine/WebCam";
 import { GlobalStyle } from "./style/global";
 import Describe from "./pages/product/Describe";
 import Pose from "./pages/machine/Pose";
+import Blutooth from "./pages/machine/Blutooth";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/describe" element={<Describe />} />
         <Route path="/webcam" element={<WebCam />} />
         <Route path="/webcam/pose" element={<Pose />} />
+        <Route path="/machine" element={<Blutooth />} />
       </Routes>
     </BrowserRouter>
   );
