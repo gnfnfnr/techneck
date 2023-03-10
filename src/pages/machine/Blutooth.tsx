@@ -9,6 +9,7 @@ const BlutoothBox = styled.div`
 
 export default function Blutooth({}: Props) {
   const [device, setDevice] = useState<object>({});
+  const [support, setSupport] = useState<boolean>(true);
   async function connectToDevice() {
     await navigator.bluetooth
       .requestDevice({
@@ -17,8 +18,8 @@ export default function Blutooth({}: Props) {
             name: "HC-06",
           },
         ],
+        // acceptAllDevices: true,
       })
-      // acceptAllDevices: true,
       .then((device) => {
         console.log(device);
         // device is a BluetoothDevice object
@@ -27,6 +28,7 @@ export default function Blutooth({}: Props) {
       .catch((error) => {
         console.log(error);
         // Handle any errors
+        setSupport(error);
       });
   }
 
@@ -35,9 +37,15 @@ export default function Blutooth({}: Props) {
   function disconnect() {}
   return (
     <BlutoothBox>
-      <button onClick={connectToDevice}>Connect to Bluetooth device</button>
-      <button onClick={readValue}>Read value</button>
-      <button onClick={disconnect}>disconnect</button>
+      {support ? (
+        <>
+          <button onClick={connectToDevice}>Connect to Bluetooth device</button>
+          <button onClick={readValue}>Read value</button>
+          <button onClick={disconnect}>disconnect</button>
+        </>
+      ) : (
+        <div>지원되지 않는 환경입니다</div>
+      )}
     </BlutoothBox>
   );
 }
