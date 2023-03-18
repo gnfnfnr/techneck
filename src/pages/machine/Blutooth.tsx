@@ -9,28 +9,56 @@ const BlutoothBox = styled.div`
 
 export default function Blutooth({}: Props) {
   const [device, setDevice] = useState<BluetoothDevice | null>(null);
+  const [characteristic, setCharacteristic] = useState<
+    BluetoothRemoteGATTCharacteristic | undefined
+  >(undefined);
+  const [value, setValue] = useState<number | undefined>(undefined);
   const [support, setSupport] = useState<boolean>(true);
   const deviceName = "HC-06";
-  const bleService = "fitness_machine";
-  const bleCharacteristic = "battery_level";
+  const bleService = 0xffe0;
+  const bleChar = 0xffe1;
   useEffect(() => {
     if (!navigator.bluetooth) {
       setSupport(false);
     }
   }, []);
+  const handleValueChanged = (event: Event) => {
+    console.log("dff", event);
+    const value = (
+      event.target as BluetoothRemoteGATTCharacteristic
+    ).value?.getInt8(0);
+    console.log(value);
+    setValue(value);
+  };
   async function connectToDevice() {
     try {
+      // Scan for nearby Bluetooth devices
       const options = {
-        filters: [
-          {
-            name: deviceName,
-          },
-        ],
+        filters: [{ name: deviceName }],
         optionalServices: [bleService],
-        // acceptAllDevices: true,
       };
-      const devi = await navigator.bluetooth.requestDevice(options);
-      setDevice(devi);
+      const device = await navigator.bluetooth.requestDevice(options);
+
+      // Connect to the selected device
+      const server = await device.gatt?.connect();
+
+      // Get the characteristic for receiving data
+      const service = await server?.getPrimaryService(bleService);
+      console.log(service);
+      const characteristic = await service?.getCharacteristic(bleChar);
+      console.log(characteristic?.value?.getInt8(0));
+      // const value = await characteristic?.readValue();
+      // console.log(value);
+      // Start receiving data
+      // await characteristic?.startNotifications();
+      characteristic?.addEventListener(
+        "characteristicvaluechanged",
+        handleValueChanged
+      );
+
+      // Set the connected device and characteristic in state
+      setDevice(device);
+      setCharacteristic(characteristic);
     } catch (error) {
       console.error("Error connecting to Bluetooth device:", error);
     }
@@ -62,6 +90,7 @@ export default function Blutooth({}: Props) {
     }
   }
   function handleBatteryLevelChanged(event: any) {
+    console.log(event);
     if (event.target.value) {
       let measure = event.target.value.getUint8(0);
       console.log(measure);
