@@ -2,25 +2,26 @@
   {
     "id": 1,
     "title": "제품 소개",
-    "image": "http://dummyimage.com/102x100.png/5fa2dd/ffffff",
-    "description": "Other specified injuries of thorax"
+    "image": "straightener.png",
+    "description": "목에 부착하는 간단한 형태의 거북기 교정기!"
   },
   {
     "id": 2,
     "title": "제품설계",
-    "image": "http://dummyimage.com/118x100.png/dddddd/000000",
-    "description": "Nondisp fx of anterior column of left acetabulum, init"
+    "image": "fullDrawing.png",
+    "description": "부착하기 쉽도록 가볍고 간단한 설계",
+    "url": "/describe"
   },
   {
     "id": 3,
     "title": "기대효과",
-    "image": "http://dummyimage.com/250x100.png/ff4444/ffffff",
-    "description": "Breakdown of unsp cardiac electronic device, sequela"
+    "image": "straightener.png",
+    "description": "장시간 PC 사용\n조깅 등의 가벼운 운동\n 앉아 책을 읽기\n지하철 등 장시간 스마트폰 사용\n 으로 인한 거북목 걱정 그만!"
   },
   {
     "id": 4,
-    "title": "why? 왜 이 제품인지",
-    "image": "http://dummyimage.com/154x100.png/cc0000/ffffff",
-    "description": "Wedge compression fracture of unspecified lumbar vertebra"
+    "title": "제품 더 활용하기",
+    "image": "app.png",
+    "description": "웹과 앱 동시에 사용가능한 멀티 디바이스!"
   }
 ]

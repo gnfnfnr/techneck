@@ -69,8 +69,10 @@ const DescribeMain = styled.div`
   flex-wrap: wrap;
   gap: 24px;
 `;
-const DescribeTextBox = styled.div`
+const DescribeTextBox = styled.div<{ locate: string }>`
   width: 30%;
+  align-self: ${({ locate }) => locate};
+
   & h3 {
     font-size: 18px;
     font-weight: bold;
@@ -121,8 +123,9 @@ export default function Describe() {
       <DescribeTitleBox>
         <h2>거북목 교정기</h2>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam
-          iste libero earum inventore corrupti, non culpa expedita? Dolores
+          장시간 PC 사용, 조깅 등의 가벼운 운동, 책을 읽기, 장시간 스마트폰
+          사용한다면 AI의 판단과 거북목 교정기을 이용해서 거북목 여부를 알 수
+          있다.
         </p>
       </DescribeTitleBox>
       <DescribeMain>
@@ -137,7 +140,7 @@ export default function Describe() {
             />
           ))}
         </DescribeImageBox>
-        <DescribeTextBox>
+        <DescribeTextBox locate={data[current].locate}>
           <TextBox current={current}>
             <TextContent>
               <h3>{data[current].name}</h3>

@@ -52,14 +52,24 @@ const DetailMain = styled.div`
   flex-wrap: wrap;
   padding: 0 10px;
   justify-content: space-between;
+  overflow: auto;
+  padding: 10px 0;
 `;
 const DetailDescription = styled.p`
   width: 50%;
   text-align: center;
+  line-height: 1.4;
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
 `;
 const DetailImg = styled.img`
   width: 40%;
   min-width: 200px;
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
 `;
 
 export default function Detail({ setShow, current }: Info) {
@@ -77,7 +87,11 @@ export default function Detail({ setShow, current }: Info) {
         </DetailTitle>
         <DetailMain>
           <DetailDescription>{data[current].description}</DetailDescription>
-          <DetailImg src={require("../../img/back.png")} />
+          <DetailImg
+            src={require(`../../img/${
+              data[current]?.detailImage || data[current].image
+            }`)}
+          />
         </DetailMain>
       </DetailSection>
     </DetailBox>

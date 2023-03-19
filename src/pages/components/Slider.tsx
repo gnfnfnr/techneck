@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import UseInterval from "./UseInterval";
 
@@ -8,15 +8,17 @@ const SliderBox = styled.div`
   height: 40vh;
   margin: 0 auto;
   min-height: 350px;
+  background: white;
 `;
 
 const SliderImage = styled.img<{ index: number; current: number }>`
-  width: 100%;
+  width: 90%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   opacity: ${({ index, current }) => (index === current ? 1 : 0)};
   transition: opacity 1.5s ease-in-out;
 `;
@@ -33,7 +35,7 @@ const SliderButtonsBox = styled.div`
 
 const SliderButton = styled.button<{ index: number; current: number }>`
   all: unset;
-  background-color: #${({ index, current }) => (index === current ? "fff" : "ffffff40")};
+  background-color: #${({ index, current }) => (index === current ? "313131" : "cdcdcd")};
   width: 10px;
   height: 10px;
   border-radius: 2px;
@@ -53,7 +55,7 @@ const Slider = ({ imageUrl }: Image) => {
     <SliderBox>
       {imageUrl.map((url, index) => (
         <SliderImage
-          src={url}
+          src={require(`../../img/${url}`)}
           alt="로고 이미지"
           index={index}
           current={current}

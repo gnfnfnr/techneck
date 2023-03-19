@@ -3,21 +3,25 @@
     "id": "front",
     "name": "제품 앞면",
     "image": "front.png",
-    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp cardiac electronic ",
-    "description": "Other specified injuries of thorax"
+    "short": "신체에 붙일 수 있어야 하므로 접착력 있고 부드러움을 줄 수 있는 제품 선택",
+    "description": "Other specified injuries of thorax",
+    "locate": "flex-start"
   },
   {
     "id": "connection",
     "name": "블루투스 모듈",
     "image": "connection.png",
-    "short": "Breakdown of unsp cardiac sequelaBreakdown of unsp cardiac electronic device, sequela",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam iste libero earum inventore corrupti, non culpa expedita? Dolores"
+    "short": "휨센서가 구부려지면서 값이 변하고 이를 블루투스 모듈 HC06을 통해 컴퓨터 및 스마트폰에 전송",
+    "description": "바른 자세를 유지해야 하는 모든 상황에 제약없이 이용할 수 있도록 소형 모델인 Arduino Leonardo와 블루투스 모듈 HC-06을 이용하였다. Flex sensor은 신축성 있는 소재로 만들어진 센서로, 이를 이용해 물체나 부위의 굴곡, 굽힘 등을 감지하여 그 값을 전기 신호로 변환해 주는 장치이다. 기기의 중앙에 위치한 flex sensor가 목의 굽음(거북목)을 감지하면 저항 값이 변화하게 되고, 이를 Arduino Leonardo에 전달하여 HC06을 통해 다른 기기(PC 또는 스마트폰)에 전달할 수 있도록 회로를 설계했다.",
+    "locate": "center",
+    "detailImage": "detailDrawing.png"
   },
   {
     "id": "back",
     "name": "제품 뒷면",
     "image": "back.png",
-    "short": "Breakdown of unsp cardiac electronic device, sequelaBreakdown of unsp ",
-    "description": "Breakdown of unsp cardiac electronic device, sequela"
+    "short": "실과 바늘을 통해 앞면과 동일한 제품으로 제품 닫음",
+    "description": "실과 바늘을 통해 앞면과 동일한 제품으로 제품 닫음",
+    "locate": "flex-end"
   }
 ]
