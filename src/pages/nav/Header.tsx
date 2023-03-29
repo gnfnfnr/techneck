@@ -39,8 +39,7 @@ const HeaderLogo = styled.img`
 
 const list = [
   { id: "product", title: "제품", href: "/describe" },
-  { id: "webcam", title: "측정", href: "/webcam" },
-  { id: "machine", title: "아두이노", href: "/machine" },
+  { id: "webcam", title: "측정", href: "/requirement" },
 ];
 
 const Header = () => {
