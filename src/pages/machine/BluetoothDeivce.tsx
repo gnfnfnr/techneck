@@ -7,11 +7,17 @@ const BlutoothBox = styled.div`
 
 interface Info {
   setDeviceRate: Dispatch<SetStateAction<number>>;
+  device: BluetoothDevice | null;
+  setDevice: Dispatch<SetStateAction<BluetoothDevice | null>>;
 }
 
-export default function BluetoothDeivce({ setDeviceRate }: Info) {
+export default function BluetoothDeivce({
+  setDeviceRate,
+  device,
+  setDevice,
+}: Info) {
   const [support, setSupport] = useState<boolean>(false);
-  const [device, setDevice] = useState<BluetoothDevice | null>(null);
+  // const [device, setDevice] = useState<BluetoothDevice | null>(null);
   const [text, setText] = useState<String>("블루투스를 연결해주세요");
   const deviceName = "HC-06";
   useEffect(() => {
@@ -29,7 +35,22 @@ export default function BluetoothDeivce({ setDeviceRate }: Info) {
       const options = {
         filters: [{ name: deviceName }],
       };
-      setDevice(await navigator.bluetooth.requestDevice(options));
+      const device = await navigator.bluetooth.requestDevice(options);
+      setDevice(device);
+      if (device) {
+        const server = await device.gatt?.connect();
+
+        // Get the characteristic for receiving data
+        const service = await server?.getPrimaryService(serviceUuid);
+        const characteristic = await service?.getCharacteristic(
+          characteristicUuid
+        );
+        console.log(characteristic?.value?.getInt8(0));
+        characteristic?.addEventListener(
+          "characteristicvaluechanged",
+          handleNotifications
+        );
+      }
     } catch {
       setText("오류가 발생했습니다. 블루투스 연결을 다시 시도해주세요");
     }
@@ -48,25 +69,7 @@ export default function BluetoothDeivce({ setDeviceRate }: Info) {
   const serviceUuid = 0xffe0;
   const characteristicUuid = 0xffe1;
 
-  async function readValue() {
-    if (device) {
-      const server = await device.gatt?.connect();
-
-      // Get the characteristic for receiving data
-      const service = await server?.getPrimaryService(serviceUuid);
-      const characteristic = await service?.getCharacteristic(
-        characteristicUuid
-      );
-      console.log(characteristic?.value?.getInt8(0));
-      characteristic?.addEventListener(
-        "characteristicvaluechanged",
-        handleNotifications
-      );
-    }
-  }
-
   function handleNotifications(event: Event) {
-    console.log("Dfdf");
     let value: any = (
       event.target as BluetoothRemoteGATTCharacteristic
     ).value?.getInt8(0);
@@ -78,7 +81,6 @@ export default function BluetoothDeivce({ setDeviceRate }: Info) {
       {support ? (
         <div>
           <button onClick={connect}>블루투스 연결</button>
-          <button onClick={readValue}>값 받기</button>
           <button onClick={disconnect}>블루투스 해지</button>
           <p>{text}</p>
         </div>
