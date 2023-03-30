@@ -9,25 +9,27 @@ export default function Pose() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [poseRate, setPoseRate] = useState<number>(0);
   const [deviceRate, setDeviceRate] = useState<number>(0);
-  const [poseResult, setPoseResult] = useState<string>("");
   const [device, setDevice] = useState<BluetoothDevice | null>(null);
   UseInterval(() => {
-    setPoseResult(
-      poseRate > 0.5 || deviceRate !== 0 ? "거북목 입니다" : "바른자세 입니다"
-    );
+    if (deviceRate !== 0 || poseRate > 0.5) {
+      notify();
+    }
   }, 10000);
-  useEffect(() => {
-    notify();
-  }, [poseResult]);
+  const show = searchParams.get("device");
+
   return (
     <div>
-      {device && <Webcam setPoseRate={setPoseRate} />}
-      {searchParams.get("device") && (
-        <BluetoothDeivce
-          setDeviceRate={setDeviceRate}
-          device={device}
-          setDevice={setDevice}
-        />
+      {show === "1" ? (
+        <>
+          <BluetoothDeivce
+            setDeviceRate={setDeviceRate}
+            device={device}
+            setDevice={setDevice}
+          />
+          {device && <Webcam setPoseRate={setPoseRate} />}
+        </>
+      ) : (
+        <Webcam setPoseRate={setPoseRate} />
       )}
     </div>
   );

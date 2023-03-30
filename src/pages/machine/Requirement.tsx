@@ -58,11 +58,6 @@ export default function Requirement() {
   const [show, setShow] = useState<boolean>(false);
   const [isDevice, setIsDevice] = useState<boolean>(false);
 
-  const pageLink = {
-    false: "/Requirement/pose",
-    true: "/bluetooth",
-  };
-
   return (
     <RequirementBox>
       <RequirementCover>
@@ -70,7 +65,6 @@ export default function Requirement() {
         <RequirementWarning>
           <li>1. 얼굴과 어깨가 보여져야 합니다.</li>
           <li>2. 정확하게 측정되지 않을 수도 있습니다</li>
-          <li></li>
         </RequirementWarning>
         <RequirementCheck>
           <input
@@ -94,7 +88,7 @@ export default function Requirement() {
           <RequirementBtn
             onClick={() =>
               window.open(
-                `/pose?device=${isDevice}`,
+                `/pose?device=${isDevice ? 1 : 2}`,
                 "_blank",
                 "width: 300px, height: 200px"
               )
